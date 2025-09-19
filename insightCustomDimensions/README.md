@@ -12,3 +12,55 @@ Submitting a PR with an example reproducing the issue
 in [this repository](https://github.com/microsoft/ApplicationInsights-Java-Repros) would make it
 easier for the Application Insight maintainers to help you. Before doing this, you have to fork this
 repository.
+
+## Sample Test App
+
+* 5 Filter added
+  * `SpanInitializationFilter`: init the span
+  * `OidLoggingFilter`: read the OID from JWT Baerer if exists
+  * `CountryLoggingFilter`: read the dbName from URL like /api/v1/{dbName}/company
+  * `HttpQueryLoggingFilter`: read the Query-Parameter
+  * `RawBodyLoggingFilter`: read the body of POST and PUT
+* Endpoints:
+  * GET /api/v1/:dbName/company (i.e. :dbName=germany)
+    * Response:
+      ```    
+        {
+        "id": 1758202622283,
+        "name": "germany-Name",
+        "street": "germany-Street",
+        "postalCode": "germany-PostalCode",
+        "city": "germany-City"
+        },
+        {
+        "id": 1758202622283,
+        "name": "germany-Name",
+        "street": "germany-Street",
+        "postalCode": "germany-PostalCode",
+        "city": "germany-City"
+        }
+        ]
+      ```
+  * GET /api/v1/:dbName/company/:id (i.e :dbName=germany, id=123)
+    * Response:
+      ```
+        {
+        "id": 111,
+        "name": "germany-Name",
+        "street": "germany-Street",
+        "postalCode": "germany-PostalCode",
+        "city": "germany-City"
+        }
+      ```
+
+  * POST/PUT /api/v1/:dbName/company (i.e :dbName=germany)
+    * Request/Response (sample)
+      ```        
+        {
+        "id": 111,
+        "name": "germany-Name",
+        "street": "germany-Street",
+        "postalCode": "germany-PostalCode",
+        "city": "germany-City"
+        }
+      ```
